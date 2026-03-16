@@ -14,10 +14,10 @@ export default function SupportPage() {
           <div className="flex items-center gap-3 p-4 bg-brand/5 rounded-xl border border-brand/10 w-fit">
             <Mail className="text-brand" size={24} />
             <a 
-              href="mailto:soporte@dictadolab.com" 
+              href="mailto:franlambbros@gmail.com" 
               className="text-xl font-bold text-brand hover:underline"
             >
-              soporte@dictadolab.com
+              franlambbros@gmail.com
             </a>
           </div>
           
