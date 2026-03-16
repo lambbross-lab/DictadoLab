@@ -68,7 +68,7 @@ export default function Footer() {
           <ul className="space-y-3 text-sm">
             <li className="flex items-center gap-2">
               <span className="text-slate-500">Email:</span>
-              <a href="mailto:hola@dictadolab.com" className="text-slate-300 hover:text-brand transition-colors">hola@dictadolab.com</a>
+              <a href="mailto:franlambbros@gmail.com" className="text-slate-300 hover:text-brand transition-colors">hola@dictadolab.com</a>
             </li>
             <li><Link to="/soporte" className="hover:text-brand transition-colors">Soporte</Link></li>
             <li className="pt-4 flex gap-4">
