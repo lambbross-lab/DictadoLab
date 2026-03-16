@@ -1,0 +1,5 @@
+{
+  "name": "DictadoLab - Generador de Dictados",
+  "description": "Plataforma para docentes que genera dictados personalizados por regla ortográfica y nivel de dificultad.",
+  "requestFramePermissions": []
+}
