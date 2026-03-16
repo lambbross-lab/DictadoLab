@@ -49,7 +49,13 @@ export interface DictationResult {
   alAdaptation?: ALAdaptation;
 }
 
-export async function generateDictations(config: DictationRequest): Promise<DictationResult[]> {
+const EDGE_URL = 'https://rdjfdbaxhwptybbcngop.supabase.co/functions/v1/generate-dictado';
+
+function wait(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function requestDictations(config: DictationRequest): Promise<DictationResult[]> {
   const { data: { session } } = await supabase.auth.getSession();
 
   const headers: Record<string, string> = {
@@ -61,28 +67,26 @@ export async function generateDictations(config: DictationRequest): Promise<Dict
     headers['Authorization'] = `Bearer ${session.access_token}`;
   }
 
-  console.log("SESSION USER:", session?.user?.id || null);
-  console.log("HAS TOKEN:", !!session?.access_token);
+  console.log('SESSION USER:', session?.user?.id || null);
+  console.log('HAS TOKEN:', !!session?.access_token);
 
-  const response = await fetch(
-    'https://rdjfdbaxhwptybbcngop.supabase.co/functions/v1/generate-dictado',
-    {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({ config }),
-    }
-  );
+  const response = await fetch(EDGE_URL, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ config }),
+  });
 
   const rawText = await response.text();
 
-  console.log("EDGE STATUS:", response.status);
-  console.log("EDGE BODY:", rawText);
+  console.log('EDGE STATUS:', response.status);
+  console.log('EDGE BODY:', rawText);
 
   if (!response.ok) {
     throw new Error(`Edge ${response.status}: ${rawText}`);
   }
 
   let data: unknown;
+
   try {
     data = rawText ? JSON.parse(rawText) : [];
   } catch {
@@ -94,4 +98,14 @@ export async function generateDictations(config: DictationRequest): Promise<Dict
   }
 
   return data as DictationResult[];
+}
+
+export async function generateDictations(config: DictationRequest): Promise<DictationResult[]> {
+  try {
+    return await requestDictations(config);
+  } catch (error) {
+    console.warn('Primer intento fallido. Reintentando...', error);
+    await wait(1200);
+    return await requestDictations(config);
+  }
 }
