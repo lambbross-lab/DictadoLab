@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'r
 import Header from './components/Header';
 import AppHeader from './components/AppHeader';
 import Footer from './components/Footer';
+import CookieBanner from './components/CookieBanner';
 import LandingPage from './pages/LandingPage';
 import GeneratorPage from './pages/GeneratorPage';
 import HistoryPage from './pages/HistoryPage';
@@ -32,7 +33,6 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   }
 
   if (!user) {
-    // Prevent infinite redirect loop when rendering as a background location
     if (window.location.pathname === '/auth') {
       return null;
     }
@@ -66,7 +66,6 @@ function Layout() {
               </ProtectedRoute>
             } 
           />
-          {/* Legal pages */}
           <Route path="/aviso-legal" element={<AvisoLegal />} />
           <Route path="/privacidad" element={<Privacidad />} />
           <Route path="/cookies" element={<Cookies />} />
@@ -90,6 +89,7 @@ function Layout() {
         )}
       </main>
       {!isApp && <Footer />}
+      <CookieBanner />
     </div>
   );
 }

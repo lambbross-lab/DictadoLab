@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { PenTool } from 'lucide-react';
+import { clearCookieConsent } from '../lib/cookieConsent';
 
 export default function Footer() {
   const navigate = useNavigate();
@@ -20,7 +21,6 @@ export default function Footer() {
   return (
     <footer className="bg-slate-900 text-slate-400 py-20 px-6 mt-20">
       <div className="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-        {/* Columna Marca */}
         <div className="space-y-6">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-brand rounded-xl flex items-center justify-center text-white">
@@ -38,7 +38,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Columna Producto */}
         <div>
           <h4 className="text-white font-bold mb-6 uppercase text-xs tracking-widest">Producto</h4>
           <ul className="space-y-3 text-sm">
@@ -50,19 +49,25 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Columna Legal */}
         <div>
           <h4 className="text-white font-bold mb-6 uppercase text-xs tracking-widest">Legal</h4>
           <ul className="space-y-3 text-sm">
             <li><Link to="/aviso-legal" className="hover:text-brand transition-colors">Aviso legal</Link></li>
             <li><Link to="/privacidad" className="hover:text-brand transition-colors">Política de privacidad</Link></li>
             <li><Link to="/cookies" className="hover:text-brand transition-colors">Política de cookies</Link></li>
+            <li>
+              <button
+                onClick={() => clearCookieConsent()}
+                className="hover:text-brand transition-colors"
+              >
+                Cambiar cookies
+              </button>
+            </li>
             <li><Link to="/terminos" className="hover:text-brand transition-colors">Términos de uso</Link></li>
             <li><Link to="/reembolsos" className="hover:text-brand transition-colors">Política de reembolsos</Link></li>
           </ul>
         </div>
 
-        {/* Columna Contacto */}
         <div>
           <h4 className="text-white font-bold mb-6 uppercase text-xs tracking-widest">Contacto</h4>
           <ul className="space-y-3 text-sm">
