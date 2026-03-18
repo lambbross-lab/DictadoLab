@@ -239,19 +239,26 @@ export default function AuthPage() {
               {!isForgotPassword && !isResettingPassword && (
                 <>
                   <button
-                    type="button"
-                    onClick={signInWithGoogle}
-                    disabled={loading}
-                    className="w-full py-3 mb-6 bg-white border border-slate-200 rounded-xl font-semibold text-slate-700 hover:bg-slate-50 transition-all shadow-sm flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    Continuar con Google
-                  </button>
+  type="button"
+  onClick={signInWithGoogle}
+  disabled={loading}
+  className="w-full py-3 mb-6 bg-white border border-slate-200 rounded-xl font-semibold text-slate-700 hover:bg-slate-50 transition-all shadow-sm flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+>
+  <img
+    src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+    alt="Google"
+    className="w-5 h-5"
+  />
+  {isLogin ? "Iniciar sesión con Google" : "Crear cuenta con Google"}
+</button>
 
                   <div className="flex items-center gap-4 mb-6">
-                    <div className="flex-1 h-px bg-slate-200"></div>
-                    <span className="text-xs text-slate-400">o</span>
-                    <div className="flex-1 h-px bg-slate-200"></div>
-                  </div>
+  <div className="flex-1 h-px bg-slate-200"></div>
+  <span className="text-xs text-slate-400 uppercase tracking-wider">
+    o continuar con email
+  </span>
+  <div className="flex-1 h-px bg-slate-200"></div>
+</div>
                 </>
               )}
 
