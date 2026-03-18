@@ -70,23 +70,26 @@ export default function AuthPage() {
   }, [navigate, from]);
 
   const signInWithGoogle = async () => {
-    setLoading(true);
-    setError(null);
+  setLoading(true);
+  setError(null);
 
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${window.location.origin}/`
-        }
-      });
+  try {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        queryParams: {
+          prompt: 'select_account'
+        },
+        redirectTo: `${window.location.origin}/`
+      }
+    });
 
-      if (error) throw error;
-    } catch (err: any) {
-      setError(err.message || 'No se pudo iniciar sesión con Google.');
-      setLoading(false);
-    }
-  };
+    if (error) throw error;
+  } catch (err: any) {
+    setError(err.message || 'No se pudo iniciar sesión con Google.');
+    setLoading(false);
+  }
+};
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
