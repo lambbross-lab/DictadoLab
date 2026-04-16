@@ -179,19 +179,24 @@ export default function GeneratorPage() {
     setShowPresentation(true);
   };
 
-  const handleSaveToHistory = (result: DictationResult) => {
-    if (!isPro) {
-      goToPlanes();
-      return;
-    }
-    historyService.saveDictation(result, config.length);
+const handleSaveToHistory = async (result: DictationResult) => {
+  if (!isPro) {
+    goToPlanes();
+    return;
+  }
+
+  try {
+    await historyService.saveDictation(result, config.length);
     setSaveMessage("Dictado guardado en tu historial");
-    
-    // Auto-hide message
-    setTimeout(() => {
-      setSaveMessage(null);
-    }, 3000);
-  };
+  } catch (error) {
+    console.error(error);
+    setSaveMessage("No se pudo guardar el dictado");
+  }
+
+  setTimeout(() => {
+    setSaveMessage(null);
+  }, 3000);
+};
 
   const goToPlanes = () => {
     setShowPlanesModal(true);
