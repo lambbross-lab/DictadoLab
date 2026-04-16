@@ -19,19 +19,33 @@ export default function HistoryPage() {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [showPresentation, setShowPresentation] = useState(false);
 
-  useEffect(() => {
-    setSavedDictations(historyService.getHistory());
-  }, []);
+useEffect(() => {
+  const loadHistory = async () => {
+    const history = await historyService.getHistory();
+    setSavedDictations(history);
+  };
 
-  const handleDelete = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    historyService.deleteDictation(id);
-    setSavedDictations(historyService.getHistory());
+  loadHistory();
+}, []);
+
+const handleDelete = async (id: string, e: React.MouseEvent) => {
+  e.stopPropagation();
+
+  try {
+    await historyService.deleteDictation(id);
+    const history = await historyService.getHistory();
+    setSavedDictations(history);
+
     if (selectedDictation?.id === id) {
       setSelectedDictation(null);
     }
+
     showToast("Dictado eliminado");
-  };
+  } catch (error) {
+    console.error(error);
+    showToast("Error al eliminar");
+  }
+};
 
   const copyToClipboard = (text: string, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
